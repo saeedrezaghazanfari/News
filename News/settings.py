@@ -6,10 +6,12 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '70e6q=hit9m@w5v!^wv_9hiluxxtnpqy9i@p)zz@k^s6enn@7+'
 
 
-DEBUG = config('DEBUG')
+# DEBUG = config('DEBUG')
+DEBUG = True
 ALLOWED_HOSTS = []
 
 
