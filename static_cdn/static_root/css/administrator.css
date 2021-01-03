@@ -1,0 +1,162 @@
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-right: 250px;
+}
+.navbar{
+    position: sticky !important;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+}
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    right: 250px;
+    width: 0;
+    height: 100%;
+    margin-right: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: 0px;
+}
+.messagesClass{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px;
+    z-index: 35;
+}
+.f-samll{
+    font-size: 6pt !important;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+.activeAdminnav{
+    color: #fff !important;
+}
+.sizeimgprotop{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.text-white{
+    color: white;
+}
+.font-ava{
+    font-size: 13pt !important;
+}
+.font-avaa{
+    font-size: 10pt !important;
+}
+.br-rl{
+    border-radius: 25px;
+}
+.form-control:placeholder{
+    font-weight: bolder;
+}
+.form-control{
+    border-radius: 25px;
+    font-weight: bolder;
+    color: #007bff !important;
+    resize: none;
+    overflow: auto;
+}
+textarea{
+    resize: vertical !important;
+}
+.anc:hover{
+    font-weight: 900;
+    text-decoration: none;
+}
+.tikmultisize{
+    height: 25px !important;
+    width: 25px !important;
+}
+.imgeditUsermanager{
+    width: 100%;
+}
+.imgintabs{
+    width: 100px;
+    height: 60px;
+}
+.imgeditusermanagerw{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 7px solid #007bff;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+    padding-left: 0;
+    }
+    #wrapper.toggled {
+    padding-right: 250px;
+    }
+    #sidebar-wrapper {
+    width: 0;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+    }
+    #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+    }
+    #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+    }
+}

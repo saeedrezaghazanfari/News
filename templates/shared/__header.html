@@ -1,0 +1,166 @@
+{% load static %}
+<!-- start header -->
+<header class="divimagefullmeasure">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light " id="topnavbar">
+
+        <a class="navbar-brand c-warning ml-2">
+            <div class="animate__animated animate__flipInX">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'pannel:home' %}" class="c-warning no-decoration"><img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'img/newsbrand.jpg' %}{% endif %}" class="img-fluid radius sizeavatarnav " alt=""> <span>{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</span></a>&nbsp;&nbsp;<a href="{% url 'auth:signout' %}" class=" f-small c-white ml-0"><i class="fa fa-power-off" title="خروج"></i></a>
+                {% else %}
+                    <a href="{% url 'home' %}" class="c-warning no-decoration"><b>  {{ SiteSetiing.app_name }} </b></a>
+                {% endif %}
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon "></span>
+        </button>
+
+        <div class="collapse navbar-collapse text-center ml-200" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link c-warning mr-3 ml-3 {% if request.path == '/' %}active-navlink{% endif %}" href="{% url 'home' %}">خانه</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link c-warning mr-3 {% if '/post' in request.path %}active-navlink{% endif %}" href="{% url 'post:list' %}">اخبار</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link c-warning mr-3 {% if request.path == '/about-us' %}active-navlink{% endif %}" href="{% url 'sitesetting:aboutus' %}">درباره ی ما</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link c-warning mr-3 {% if request.path == '/contact-us' %}active-navlink{% endif %}" href="{% url 'sitesetting:contactus' %}">تماس با ما</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link c-warning mr-3" href="{% url 'pannel:home' %}"> پنل کاربری </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link c-warning mr-3" href="{% url 'auth:signout' %}">خروج</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link c-warning mr-3" href="{% url 'auth:signin' %}">ورود</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link c-warning mr-3" href="{% url 'auth:signup' %}">ثبتنام</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <!-- notification button -->
+            {% if request.user.is_authenticated %}
+            <a id="opeclonotit" class="nav-link float-left c-warning mr-3">
+                {% if noticount != 0 %}<span class="badge  badge-pill badge-danger m-neg-15 number">{{ noticount }}</span>{% endif %}
+                <span><i class="fa fa-bell border-iconNot radius p-2"></i></span>
+            </a>
+            {% endif %}
+
+            <form class="form-inline my-2 d-lg-none" method="GET" action="{% url 'post:search' %}">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control br-r" placeholder="جستجوی خبر" name="post">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="input-group-button btn bt-warning br-l"><i class="fa fa-search"></i></button>
+                    </div>    
+                </div>
+            </form>
+
+        </div>
+    </nav>
+
+    <!-- nofification -->
+    {% if request.user.is_authenticated %}
+    <div class="b-dark c-white p-4 radius-sm shadow" id="b-notificat">
+
+        <h4 class="p-3 ">اعلانات <i class="fa fa-bell c-warning"></i>
+            <a class="c-warning float-right" id="closeAnchotnot"><i class="fa fa-close"></i></a>
+        </h4>
+
+        {% if notifications and request.user.is_authenticated %}
+
+            {% for i in notifications %}
+                {% if request.user.status == 's' and i.is_simple == True %}
+                    <div class="b-white c-dark m-3 p-3 border radius-sm">
+                        <span class="f-small c-muted float-right"><i class="fa fa-clock"></i> {{ i.timeStamp | timesince }} پیش </span>
+                        <br><br>
+                        <p><b>{{ i.title }} {% if i.is_specific %}<span class="badge badge-danger">ویژه</span>{% endif %}</b></p>
+                        <p class="paragraph">
+                            {{ i.ntf }}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for i in notifications %}
+                {% if request.user.status == 'v' and i.is_specific == True %}
+                    <div class="b-white c-dark m-3 p-3 border radius-sm">
+                        <span class="f-small c-muted float-right"><i class="fa fa-clock"></i> {{ i.timeStamp | timesince }} پیش </span>
+                        <br><br>
+                        <p><b>{{ i.title }} {% if i.is_specific %}<span class="badge badge-danger">ویژه</span>{% endif %}</b></p>
+                        <p class="paragraph">
+                            {{ i.ntf }}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for i in notifications %}
+                {% if request.user.status == 'g' and i.is_newsTransition == True %}
+                    <div class="b-white c-dark m-3 p-3 border radius-sm">
+                        <span class="f-small c-muted float-right"><i class="fa fa-clock"></i> {{ i.timeStamp | timesince }} پیش </span>
+                        <br><br>
+                        <p><b>{{ i.title }} {% if i.is_specific %}<span class="badge badge-danger">ویژه</span>{% endif %}</b></p>
+                        <p class="paragraph">
+                            {{ i.ntf }}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for i in notifications %}
+                {% if request.user.status == 'n' and i.is_reporter == True %}
+                    <div class="b-white c-dark m-3 p-3 border radius-sm">
+                        <span class="f-small c-muted float-right"><i class="fa fa-clock"></i> {{ i.timeStamp | timesince }} پیش </span>
+                        <br><br>
+                        <p><b>{{ i.title }} {% if i.is_specific %}<span class="badge badge-danger">ویژه</span>{% endif %}</b></p>
+                        <p class="paragraph">
+                            {{ i.ntf }}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        {% else %}
+            <div class="alert alert-warning m-3">
+                هیچ اعلانی برای شما منتشر نشده است.
+            </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+    <!-- center message -->
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 c-white text-center mt-400">
+            <h1 class="f-large font-weight-bolder wow animate__animated animate__fadeInUp" data-wow-delay="1s"> وبسایت خبری {{ SiteSetiing.app_name }} </h1>
+            <br>
+            <h6 class=" wow animate__animated animate__fadeIn" data-wow-delay="0.3s"> <i class="fa fa-check c-warning"></i> جذابترین، داغترین و آخرین اخبار را از سایت ما ببینید. </h6>
+            <h6 class=" wow animate__animated animate__fadeIn" data-wow-delay="0.5s"> <i class="fa fa-check c-warning"></i> شما میتوانید برای خبررسانی به ما بپیوندید.</h6>
+            <h6 class=" wow animate__animated animate__fadeIn" data-wow-delay="0.7s"> <i class="fa fa-check c-warning"></i> برای ستاره شدن به ما بپیوندید.</h6>
+        </div>
+        <div class="col-md-4 mt-400-brand">
+            <img src="{% if SiteSetiing.logo.url %}{{ SiteSetiing.logo.url }}{% else %}{% static 'img/newsbrand.jpg' %}{% endif %}" class="img-fluid radius ml-4" alt="this is news Image">
+            <br>    
+            <br>    
+            <form class="form-inline my-2 text-center" method="GET" action="{% url 'post:search' %}">
+                <div class="input-group" >
+                    <input type="text" class="form-control form-control-lg br-r" placeholder="جستجوی خبر" name="post">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="input-group-button btn bt-warning br-l"><i class="fa fa-search"></i></button>
+                    </div>    
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+<!-- end header -->

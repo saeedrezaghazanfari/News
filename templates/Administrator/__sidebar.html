@@ -1,0 +1,49 @@
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <br>
+        <li class="mt-1"> <a href="{% url 'pannel:home' %}" {% if request.path == '/user/dashboard' %}class="activeAdminnav"{% endif %}>داشبورد</a> </li>
+        <li class="mt-1"> <a href="{% url 'pannel:edit' %}" {% if request.path == '/user/edit' %}class="activeAdminnav"{% endif %}>ویرایش اطلاعات</a> </li>
+        <li class="mt-1"> <a href="{% url 'pannel:changepw' %}" {% if request.path == '/user/change-pw' %}class="activeAdminnav"{% endif %}>تغییر رمز عبور</a></li>
+        <li class="mt-1"> <a href="{% url 'pannel:saved' %}" {% if request.path == '/user/saved' %}class="activeAdminnav"{% endif %}>بایگانی اخبار</a> </li>
+        <li class="mt-1"> <a href="{% url 'pannel:sendticket' %}" {% if request.path == '/user/send-ticket' %}class="activeAdminnav"{% endif %}>ارسال تیکت</a> </li>
+        {% if request.user.status == 'g' or request.user.status == 'n' %}
+            <li class="mt-1"> <a data-toggle="collapse" href="#collapseExample1" role="button"> ارسال خبر <span class="text-primary f-small">({% if request.user.status == 'n' %}خبرنگار{% endif %}{% if request.user.status == 'g' %}خبرگذار{% endif %})</span> </a> </li>
+            <div id="collapseExample1" class="collapse show">
+                <li class="mt-1"> <a href="{% url 'pannel:sendpost' %}" {% if request.path == '/user/send/post' %}class="activeAdminnav"{% endif %}><i class="fa fa-minus f-small text-primary"></i> ایجاد پست</a> </li>
+                <li class="mt-1"> <a href="{% url 'pannel:sendposttags' %}" {% if request.path == '/user/send/post/tags' %}class="activeAdminnav"{% endif %}><i class="fa fa-minus f-small text-primary"></i> افزودن تگ</a> </li>
+                <li class="mt-1"> <a href="{% url 'pannel:sendpostgalleries' %}" {% if request.path == '/user/send/post/galleries' %}class="activeAdminnav"{% endif %}><i class="fa fa-minus f-small text-primary"></i> ایجاد گالری</a> </li>
+            </div>
+        {% endif %}
+
+        {% if request.user.is_superuser %}
+            <hr class="bg-white">
+
+            <li class="mt-1"> <a href="{% url 'pannel:managerUser' %}" {% if request.path == '/user/manager/users' %}class="activeAdminnav"{% endif %}>مدیریت کاربران</a> </li>
+            <li class="mt-1"> <a href="{% url 'pannel:managerPost' %}" {% if request.path == '/user/manager/posts' %}class="activeAdminnav"{% endif %}>مدیریت اخبار</a> </li>
+            <li class="mt-1"> <a data-toggle="collapse" href="#collapseExample2" role="button"> مدیریت ایمیل ها </a> </li>
+            <div id="collapseExample2" class="collapse show">
+                <li class="mt-1"> <a href="{% url 'pannel:manageremail' %}" {% if request.path == '/user/manager/emails' %}class="activeAdminnav"{% endif %}><i class="fa fa-minus f-small text-primary"></i> ایجاد ایمیل</a> </li>
+                <li class="mt-1"> <a href="{% url 'pannel:manageremailsend' %}" {% if '/user/manager/emails/send' in request.path %}class="activeAdminnav"{% endif %}><i class="fa fa-minus f-small text-primary"></i>ارسال ایمیل</a> </li>
+            </div>
+            <li class="mt-1"> <a href="{% url 'pannel:managercharts' %}" {% if request.path == '/user/manager/charts' %}class="activeAdminnav"{% endif %}>نمودار ها</a> </li>
+            <li class="mt-1"> <a href="{% url 'pannel:managernotifications' %}" {% if request.path == '/user/manager/notifications' %}class="activeAdminnav"{% endif %}>اعلانات سایت</a> </li>
+
+
+            <hr class="bg-white">
+
+
+            <li class="mt-1"> <a href="{% url 'pannel:managercontact' %}"  {% if request.path == '/user/manager/site/contact-us' %}class="activeAdminnav"{% endif %}> تماس باما <span class="text-primary f-small number"> ({{ contactCount }}) </span> </a></li>
+            <li class="mt-1"> <a href="{% url 'pannel:manageropinion' %}"  {% if request.path == '/user/manager/site/opinions' %}class="activeAdminnav"{% endif %}> نظرات <span class="text-primary f-small number"> ({{ opinionCount }}) </span></a> </li>
+            <li class="mt-1"> <a href="{% url 'pannel:managercmtreport' %}"  {% if request.path == '/user/manager/site/comments/reports' %}class="activeAdminnav"{% endif %}> گزارش ها <span class="text-primary f-small number"> ({{ reportCount }}) </span></a> </li>
+            <li class="mt-1"> <a href="{% url 'pannel:managerads' %}"  {% if request.path == '/user/manager/site/advertisings' %}class="activeAdminnav"{% endif %}>تبلیغات</a> </li>
+            <li class="mt-1"> <a href="{% url 'pannel:managersetting' %}"  {% if request.path == '/user/manager/site/setting' %}class="activeAdminnav"{% endif %}>تنظیمات سایت</a> </li>
+
+            <hr class="bg-white">
+
+        {% endif %}
+
+        <li class="mt-1"> <a href="{% url 'auth:signout' %}">خروج از حساب کاربری  </a> </li>
+
+        <br><br><br><br>
+    </ul>
+</div>

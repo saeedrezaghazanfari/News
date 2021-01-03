@@ -1,0 +1,31 @@
+{% load static %}
+<!-- mini div -->
+<div class="py-2">
+    <div class="container">
+        <div class="row align-items-center text-center">
+            <div class="col-lg-4 text-lg-left f-small">تمام حقوق مادی و معنوی این سایت متعلق به وبسایت می باشد و استفاده از مطالب با ذکر منبع بلامانع است.</div>
+            <div class="col-lg-4 my-3 my-lg-0 text-center">
+
+                {% if SiteSetiing.instagram_id %}
+                    <a href="{{ SiteSetiing.instagram_id }}" target="_blank" class="c-dark f-icon no-decoration mr-2 icon">
+                        <i class="fa fa-instagram  wow animate__animated animate__zoomIn" data-wow-delay="1s"></i>
+                    </a>
+                {% endif %}
+                {% if SiteSetiing.telegram_id %}
+                    <a href="{{ SiteSetiing.telegram_id }}" target="_blank" class="c-dark f-icon no-decoration mr-2 icon">
+                        <i class="fa fa-telegram  wow animate__animated animate__zoomIn" data-wow-delay="1.5s"></i>
+                    </a>
+                {% endif %}
+                {% if SiteSetiing.whatsapp_id %}
+                    <a href="{{ SiteSetiing.whatsapp_id }}" target="_blank" class="c-dark f-icon no-decoration mr-2 icon">
+                        <i class="fa fa-whatsapp  wow animate__animated animate__zoomIn" data-wow-delay="1s"></i>
+                    </a>
+                {% endif %}
+
+            </div>
+            <div class="col-lg-4 text-lg-right mt-2">
+                <p>طراح و برنامه نویس: <a href="https://www.instagram.com/saeedreza_wu" target="_blank" class="c-dark font-weight-bolder no-decoration icon wow animate__animated animate__fadeIn">سعیدرضا غضنفری</a></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}اضافه کردن تبلیغ{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>اضافه کردن تبلیغ</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="{{ addads.title.id_for_label }}" class="text-primary"> {{ addads.title.label }} </label>
+                            {{ addads.title|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان تبلیغ را وارد کنید:' }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="imageads" class="text-primary">تصویر تبلیغ</label><br>
+                            <input type="file" id="imageads" name="imageads" required>
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-sm float-right">اضافه کردن تبلیغ</button><br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

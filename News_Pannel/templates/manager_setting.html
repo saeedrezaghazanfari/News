@@ -1,0 +1,62 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}تنظیمات سایت{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>تنظیمات سایت</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="{{ setting.app_name.id_for_label }}">{{ setting.app_name.label }}</label>
+                    {{ setting.app_name|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="imageadss">لوگوی وبسایت</label>
+                    <input type="file" id="imageadss" name="logopic" required><br> <br>
+
+                    <label for="{{ setting.about_us.id_for_label }}">{{ setting.about_us.label }}</label>
+                    {{ setting.about_us|add_class:'form-control form-control-sm p-3' }}<br>
+
+                    <label for="{{ setting.about_website.id_for_label }}">{{ setting.about_website.label }}</label>
+                    {{ setting.about_website|add_class:'form-control form-control-sm p-3' }}<br>
+
+                    <label for="{{ setting.place_website.id_for_label }}">{{ setting.place_website.label }}</label>
+                    {{ setting.place_website|add_class:'form-control form-control-sm p-3' }}<br>
+
+                    <label for="{{ setting.telegram_id.id_for_label }}">{{ setting.telegram_id.label }}</label>
+                    {{ setting.telegram_id|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="{{ setting.whatsapp_id.id_for_label }}">{{ setting.whatsapp_id.label }}</label>
+                    {{ setting.whatsapp_id|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="{{ setting.instagram_id.id_for_label }}">{{ setting.instagram_id.label }}</label>
+                    {{ setting.instagram_id|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="{{ setting.scale_X.id_for_label }}">{{ setting.scale_X.label }}</label>
+                    {{ setting.scale_X|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="{{ setting.scale_Y.id_for_label }}">{{ setting.scale_Y.label }}</label>
+                    {{ setting.scale_Y|add_class:'form-control form-control-sm' }}<br>
+
+                    <label for="{{ setting.active.id_for_label }}">{{ setting.active.label }}</label>
+                    {{ setting.active|add_class:'form-control form-control-sm' }}<br>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-sm float-right">ذخیره ی تغییرات</button><br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

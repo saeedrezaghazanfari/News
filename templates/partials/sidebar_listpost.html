@@ -1,0 +1,44 @@
+<!-- sideBar1 -->
+<div class="card no-border b-dark">
+    {% if request.user.status == 'n' or request.user.status == 'v' %}
+{#        <a href="{% url 'post:postSpecific' %}" class="anchor f-icon c-white b-warning text-center br-rl"> ویژه نامه </a>#}
+    {% endif %}
+    <div class="card-body b-dark">
+        <h5 class="c-warning font-weight-bolder">دسته بندی ها</h5>
+        <br>
+        {% for i in categories %}
+            <p class="f-small pl-3"><i class="fa fa-minus c-warning"></i><a href="{% url 'post:category' i.title %}" class="aInSidebar"> {{ i.title }} </a></p>
+        {% endfor %}
+
+    </div>
+
+    <div class="card-body b-dark">
+        <h5 class="c-warning font-weight-bolder">تعداد نمایش</h5>
+        <br>
+        <p class="f-small pl-3"><i class="fa fa-question c-warning"></i><a href="{% url 'post:many' '5' %}" class="aInSidebar"> نمایش <span class="number">5</span> پست اخیر </a></p>
+        <p class="f-small pl-3"><i class="fa fa-question c-warning"></i><a href="{% url 'post:many' '10' %}" class="aInSidebar"> نمایش <span class="number">10</span> پست اخیر </a></p>
+        <p class="f-small pl-3"><i class="fa fa-question c-warning"></i><a href="{% url 'post:many' '50' %}" class="aInSidebar"> نمایش <span class="number">50</span> پست اخیر </a></p>
+        <p class="f-small pl-3"><i class="fa fa-question c-warning"></i><a href="{% url 'post:many' '100' %}" class="aInSidebar"> نمایش <span class="number">100</span> پست اخیر </a></p>
+
+    </div>
+
+    <div class="card-body b-dark">
+        <h5 class="c-warning font-weight-bolder">گنجینه ی خبری زمان</h5>
+        <br>
+        <p class="f-small pl-3"><i class="fa fa-clock c-warning"></i><a href="{% url 'post:time' 'today' %}" class="aInSidebar"> اخبار امروز </a></p>
+        <p class="f-small pl-3"><i class="fa fa-clock c-warning"></i><a href="{% url 'post:time' 'yesterday' %}" class="aInSidebar"> اخبار دیروز </a></p>
+        <p class="f-small pl-3"><i class="fa fa-clock c-warning"></i><a href="{% url 'post:time' 'this-week' %}" class="aInSidebar"> اخبار این هفته </a></p>
+        <p class="f-small pl-3"><i class="fa fa-clock c-warning"></i><a href="{% url 'post:time' 'this-month' %}" class="aInSidebar"> اخبار این ماه </a></p>
+        <p class="f-small pl-3"><i class="fa fa-clock c-warning"></i><a href="{% url 'post:time' '3-month' %}" class="aInSidebar"> اخبار سه ماه اخیر </a></p>
+    </div>
+
+    <div class="card-body b-dark">
+        <h5 class="c-warning font-weight-bolder">ترین های خبری</h5>
+        <br>
+        <p class="f-small pl-3"><i class="fa fa-file c-warning"></i><a href="{% url 'post:recent' %}" class="aInSidebar"> جدیدترین اخبار </a></p>
+        <p class="f-small pl-3"><i class="fa fa-file c-warning"></i><a href="{% url 'post:mostviews' %}" class="aInSidebar"> پربازدیدترین اخبار </a></p>
+        <p class="f-small pl-3"><i class="fa fa-file c-warning"></i><a href="{% url 'post:popular' %}" class="aInSidebar"> محبوب ترین اخبار </a></p>
+        <p class="f-small pl-3"><i class="fa fa-file c-warning"></i><a href="{% url 'post:hot' %}" class="aInSidebar"> داغ ترین اخبار </a></p>
+    </div>
+
+</div>

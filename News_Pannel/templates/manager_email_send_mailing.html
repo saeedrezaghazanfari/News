@@ -1,0 +1,78 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ارسال ایمیل {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ارسال ایمیل </h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <p>
+                    <span>عنوان ایمیل: </span><span class="font-weight-bolder">{{ email.subject }}</span>
+                </p>
+                <p>
+                    <span>متن ایمیل: </span>
+                </p>
+                <div class="border p-4 paragraph">
+                    {{ email.msg | safe }}
+                </div>
+                <br>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sends" class="custom-control-input" id="switch1">
+                        <label class="custom-control-label" for="switch1">ارسال به افرادی که عضویت <b>ساده</b> دارند.</label>
+                        <span class="number">({{ sendsCount }})</span>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendv" class="custom-control-input" id="switch2">
+                        <label class="custom-control-label" for="switch2">ارسال به افرادی که عضویت <b>ویژه</b> دارند.</label>
+                        <span class="number">({{ sendvCount }})</span>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendg" class="custom-control-input" id="switch3">
+                        <label class="custom-control-label" for="switch3">ارسال به افرادی که عضویت <b>خبرگذاری</b> دارند.</label>
+                        <span class="number">({{ sendgCount }})</span>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendn" class="custom-control-input" id="switch4">
+                        <label class="custom-control-label" for="switch4">ارسال به افرادی که عضویت <b>خبرنگاری</b> دارند.</label>
+                        <span class="number">({{ sendnCount }})</span>
+                    </div>
+                    <br>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendsuper" class="custom-control-input" id="switch5">
+                        <label class="custom-control-label" for="switch5">ارسال به افرادی که مقام <b>ادمین</b> دارند.</label>
+                        <span class="number">({{ sendsuperCount }})</span>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendstaff" class="custom-control-input" id="switch6">
+                        <label class="custom-control-label" for="switch6">ارسال به افرادی که مقام <b>کارمندی</b> دارند.</label>
+                        <span class="number">({{ sendstaffCount }})</span>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-sm btn-primary">ارسال ایمیل</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

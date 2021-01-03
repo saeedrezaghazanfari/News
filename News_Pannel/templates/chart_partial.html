@@ -1,0 +1,116 @@
+var ctx = document.getElementById('myChart1').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['کل کاربران', 'کاربران ساده', 'کاربران ویژه', 'کاربران خبرگذار', 'کاربران خبرنگار', 'اخبار پیش نویس', 'اخبار منتشر شده'],
+        datasets: [{
+{#            label: 'Life expectancy',#}
+            data: [
+                '{{ users }}',
+                '{{ users_s }}',
+                '{{ users_v }}',
+                '{{ users_g }}',
+                '{{ users_n }}',
+                '{{ posts_draft }}',
+                '{{ posts_release }}'
+            ],
+            backgroundColor: [
+                'rgba(216, 27, 96, 0.6)',
+                'rgba(3, 169, 244, 0.6)',
+                'rgba(255, 152, 0, 0.6)',
+                'rgba(29, 233, 182, 0.6)',
+                'rgba(156, 39, 176, 0.6)',
+                'rgba(84, 110, 122, 0.6)',
+                '#0eff39',
+            ],
+            borderColor: [
+                'rgba(216, 27, 96, 1)',
+                'rgba(3, 169, 244, 1)',
+                'rgba(255, 152, 0, 1)',
+                'rgba(29, 233, 182, 1)',
+                'rgba(156, 39, 176, 1)',
+                'rgba(84, 110, 122, 1)',
+                'rgba(29, 233, 182, 1)',
+            ],
+            borderWidth: 5
+        }]
+    },
+    options: {
+        legend: {
+            display: true
+        },
+        title: {
+            display: true,
+            text: 'آمار وبسایت خبری طلا نیوز',
+            position: 'top',
+            fontSize: 16,
+            padding: 20,
+            fontFamily: 'Sahel',
+        },
+{#        scales: {#}
+{#            yAxes: [{#}
+{#                ticks: {#}
+{#                    min: 0#}
+{#                }#}
+{#            }]#}
+{#        }#}
+    }
+});
+
+
+var ctx = document.getElementById('myChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+            'امروز',
+            'دیروز',
+            'دو روز پیش',
+            'سه روز پیش',
+            'چهار روز پیش',
+            'پنج روز پیش',
+            'شش روز پیش',
+            'یک هفته پیش',
+        ],
+        datasets: [{
+            label: 'نمایش / روح',
+            data: [
+                '{{ today }}',
+                '{{ 1day }}',
+                '{{ 2day }}',
+                '{{ 3day }}',
+                '{{ 4day }}',
+                '{{ 5day }}',
+                '{{ 6day }}',
+                '{{ 7day }}',
+            ],
+            backgroundColor: [
+                'rgba(3, 169, 244, 0.6)',
+            ],
+            borderColor: [
+                'rgba(3, 169, 244, 1)',
+            ],
+            borderWidth: 5
+        }]
+    },
+    options: {
+        legend: {
+            display: true
+        },
+        title: {
+            display: true,
+            text: 'آمار روزانه انتشار پست',
+            position: 'top',
+            fontSize: 16,
+            padding: 20,
+            fontFamily: 'Sahel',
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0
+                }
+            }]
+        }
+    }
+});

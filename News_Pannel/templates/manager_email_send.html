@@ -1,0 +1,45 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ارسال ایمیل {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ارسال ایمیل </h4>
+        <br>
+
+        <div class="container">
+            <h5>تمامی ایمیل ها</h5>
+            <div class="shadow border p-3">
+                <table class="table table-hover table-borderless text-center">
+
+                    <tr class="bg-primary text-white">
+                        <th>#</th>
+                        <th>عنوان ایمیل</th>
+                        <th>وضعیت</th>
+                        <th>زمان ارسال</th>
+                        <th>حذف ایمیل</th>
+                        <th>ارسال ایمیل</th>
+                    </tr>
+                    {% for allMail in allMails %}
+                       <tr>
+                            <td class="number">{{ forloop.counter }}</td>
+                            <td>{{ allMail.subject }}</td>
+                            <td>{% if allMail.sended == True %}ارسال شده{% else %}ارسال نشده{% endif %}</td>
+                            <td>{% if allMail.sended == True %}{{ allMail.timeStamp | timesince }} پیش {% else %}-{% endif %}</td>
+                            <td><a href="{% url 'pannel:manageremailremove' allMail.id %}" class="btn btn-sm btn-danger">حذف </a></td>
+                            <td><a href="{% url 'pannel:manageremailsendMail' allMail.id %}" class="btn btn-sm btn-primary">ارسال </a></td>
+                       </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

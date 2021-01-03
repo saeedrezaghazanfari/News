@@ -1,0 +1,342 @@
+{% extends 'shared/__main_layout.html' %}
+{% block titlePage %}جزئیات پست {{ post.title }}{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <!-- start Body -->
+<section class="container mt-5">
+
+    <div class="b-dark c-white radius-sm">
+
+        <div class="f-small px-5 pt-4">
+            <p class="float-left"><i class="fa fa-user"></i> نویسنده: <a class="c-warning anchor">{% if post.writer.get_full_name %}{{ post.writer.get_full_name }}{% else %}{{ post.writer.username }}{% endif %} </a></p>
+            <p class="float-right"><i class="fa fa-clock"></i> زمان انتشار: <span class="c-warning"><span>{{ post.JtimeStamp }}</span> &nbsp;|&nbsp; <span>{{ post.timeStamp | timesince }} پیش </span></span></p>
+        </div>
+
+        <a href="{{ post.image.url }}">
+            <img src="{{ post.image.url }}" class="img-fluid radius-sm px-4" alt="{{ post.title }}">
+        </a>
+
+        {% if request.user.is_authenticated %}
+
+            <span id="realfavDivAjax">
+                {% if favBool == True %}
+                    <a class="favBTN btn f-large btn-sm bt-dark ml-3"><i class="fa fa-bookmark c-white"></i></a>
+                {% else %}
+                    <a class="favBTN btn f-large btn-sm bt-dark ml-3"><i class="fa fa-bookmark-o c-white"></i></a>
+                {% endif %}
+            </span>
+            <a id="ajaxfav" class="favBTN btn f-large btn-sm bt-dark ml-3"><i class="fa fa-bookmark c-white"></i></a>
+            <a id="ajaxdisfav" class="favBTN btn f-large btn-sm bt-dark ml-3"><i class="fa fa-bookmark-o c-white"></i></a>
+
+            <span id="realDivAjax">
+                {% if likeBool == True %}
+                    <a class="likeBTN btn f-large btn-sm bt-dark"><i class="fa fa-heart c-white"></i></a>
+                {% else %}
+                    <a class="likeBTN btn f-large btn-sm bt-dark"><i class="fa fa-heart-o c-white"></i></a>
+                {% endif %}
+            </span>
+            <a id="ajaxLike" class="likeBTN btn f-large btn-sm bt-dark"><i class="fa fa-heart c-white"></i></a>
+            <a id="ajaxdisLike" class="likeBTN btn f-large btn-sm bt-dark"><i class="fa fa-heart-o c-white"></i></a>
+            <span class="c-muted f-small">توسط <span class="number" id="counterAjax">{{ countLike }}</span> نفر لایک شده است.</span>
+        {% else %}
+
+            <span id="realfavDivAjax">
+                <a href="{% url 'auth:signin' %}" class=" btn f-large btn-sm bt-dark ml-3"><i class="fa fa-bookmark-o c-white"></i></a>
+            </span>
+            <span id="realDivAjax">
+                <a href="{% url 'auth:signin' %}" class=" btn f-large btn-sm bt-dark"><i class="fa fa-heart-o c-white"></i></a>
+            </span>
+            <span class="c-muted f-small">توسط <span class="number" id="counterAjax">{{ countLike }}</span> نفر لایک شده است.</span>
+
+        {% endif %}
+
+        <br><br>
+
+        <h4 class="text-center">عنوان خبر: <span class="c-warning">{{ post.title }}</span></h4>
+        <!-- star rating -->
+        <p class="text-center f-small mt-4">
+            <span class="">دسته بندی:
+                <span class="c-warning">
+                    {% for i in post.categories.all %}
+                        <a href="{% url 'post:category' i.title %}" class="anchor">{{ i.title }} </a>{% if not forloop.last %} ، {% endif %}
+                    {% endfor %}
+                </span>
+            </span>
+        </p>
+
+        <!-- news content -->
+        <div class="p-4 m-1 radius-sm shadow">
+
+            <!-- gallery -->
+            <div class="owl-carousel owl-theme"  id="read-post">
+
+                {% for i in post.galleries.all %}
+                    <div class="item">
+                        <div class="card shadow">
+                            <div class="card-body p-0">
+                                <a href="{{ i.image.url }}"><img class="img-fluid imgdetails" src="{{ i.image.url }}" alt="this is a image Gallery"></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <br>
+
+            <div class="float-right">
+                <i class="fa fa-eye"></i> تعداد بازدید: <span class="c-warning"><span class="number">{{ post.like_count }}</span></span><br>
+                <i class="fa fa-book"></i> زمان خواندن: <span class="c-warning"><span class="number">{{ post.time_reading }}</span> دقیقه </span>
+            </div>
+
+            <br><br>
+
+            <h5 class="c-warning">خلاصه ی خبر:</h5><br>
+            <p class="paragraph c-muted">
+                {{ post.short_description }}
+            </p>
+            <div class="bar-long"></div>
+            <br>
+            <h5 class="c-warning">مشروح خبر:</h5><br>
+
+            <p class="paragraph c-muted">
+                {{ post.description | safe }}
+            </p>
+
+            <!-- data tags -->
+            <div class="p-3 m-1">
+
+                <i class="fa fa-tag"></i> تگ ها :
+                {% if post.tags.all %}
+                    <span class="c-warning">
+                       {% for i in post.tags.all %}
+                            <a href="{% url 'post:tag' i.title %}" class="btn btn-sm bt-warning my-1 c-dark br-rl">{{ i.title }} </a>
+                       {% endfor %}
+                    </span>
+                {% else %}
+                    <br>
+                    <div class="alert alert-warning">در حال حاضر تگی برای این محصول تعریف نشده است.</div>
+                {% endif %}
+
+            </div>
+
+            <div class="text-center">
+                <br>
+                <a href="#commentsPost" class="btn bt-warning c-white">مشاهده ی بخش نظرات</a>
+                <a href="{% url 'post:list' %}" class="btn bt-warning c-white">برگشت به لیست اخبار</a>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <img src="{% static 'svg/details.svg' %}" class="img-fluid imgSvgbottomman-list-new" alt="">
+
+    <div class="bg-light radius-sm">
+
+        <br>
+        <h4 class="c-warning text-center">اخبار مرتبط</h4>
+        <br>
+
+        <div class="container owl-carousel owl-theme">
+
+            {% for i in rel_posts %}
+                <div class="item">
+                    <div class="card shadow h-479">
+                        <div class="card-body p-0">
+                            <a href="{{ i.get_absolute_url }}"><img class="img-fluid imgHome" src="{{ i.image.url }}" alt="{{ i.title }}"></a>
+                            <div class="mt-1 p-3">
+                                <p class="text-center"><a href="{{ i.get_absolute_url }}" class="anchor f-title-news">{{ i.title }}</a></p>
+                                <p>خلاصه ی خبر: <span class="font-weight-bolder text-muted">{{ i.short_description }}</span></p>
+                                <a href="{{ i.get_absolute_url }}" class="btn btn-sm bt-warning p-button-abs-news"> مشاهده ی خبر <i class="fa fa-eye"></i></a>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="c-muted d-inline float-right mr-3 f-small mt-1"><i class="fa fa-clock"></i> {{ i.timeStamp|timesince }} پیش </span>
+                </div>
+            {% endfor %}
+
+        </div>
+        <br>
+    </div>
+    <br>
+    <!-- comments -->
+    <div class="mt-3" id="commentsPost">
+
+        {% if request.user.is_authenticated %}
+            <form method="POST" class="p-3 text-center border radius-sm shadow">
+                {% csrf_token %}
+                {{ sendcomment.media }}
+                {{ sendcomment }}
+                <br><button type="submit" class="btn bt-warning-beauti float-right">ارسال پیام</button><br><br>
+            </form>
+            <br>
+        {% endif %}
+
+        {% if comments %}
+            {% for comment in comments %}
+                {% if not comment.parent %}
+                    <div class=" radius-sm shadow border p-3">
+                        <img src="{% if comment.user.avatar.url %}{{ comment.user.avatar.url }}{% endif %}" class="img-fluid sizeavatarnav-details border radius" alt="{{ comment.user.username }}">
+                        <span class="font-weight-bolder">{{ comment.user.username }}</span>
+                        {% if comment.user.is_superuser %}(<span class="f-small">مدیر سایت</span>){% endif %}
+                        {% if comment.user.status == 's' %}(<span class="f-small">کاربر ساده</span>){% endif %}
+                        {% if comment.user.status == 'v' %}(<span class="f-small">کاربر ویژه</span>){% endif %}
+                        {% if comment.user.status == 'g' %}(<span class="f-small">خبرگذار</span>){% endif %}
+                        {% if comment.user.status == 'n' %}(<span class="f-small">خبرنگار</span>){% endif %}
+                        :
+                        <br>
+                        <p class="paragraph text-muted px-5">
+                            {{ comment.msg | safe }}
+                        </p>
+                        {% if request.user.is_authenticated %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ sendreply.post_id }}
+                                <input type="text" name="comment_id" value="{{ comment.id }}" class="d-none">
+                                {{ sendreply.rpl|add_class:'p-1 br-rl' }}
+                                <br><button type="submit" class="btn btn-sm bt-warning float-right ml-2">ارسال پیام</button>
+                            </form>
+                        {% endif %}
+                        <a href="{% url 'post:reportComment' comment.id post.id %}" class="btn btn-sm bt-warning float-right ml-1">گزارش پیام</a>
+                        {% if request.user.is_superuser %}
+                            <a href="{% url 'post:removeComment' comment.id post.id %}" class="btn btn-sm bt-warning float-right">حذف پیام</a>
+                        {% endif %}
+                        <br>
+                    </div>
+                    <span class="c-muted float-right mr-4 f-small"><i class="fa fa-clock"></i> {{ comment.timeStamp | timesince }} پیش</span>
+                    <br>
+
+                    {% for child in comments %}
+                        {% if comment.pk == child.parent.pk %}
+                            <div class="radius-sm shadow border p-3 ml-5">
+                                <img src="{% if child.user.avatar %}{{ child.user.avatar.url }}{% else %}{% static 'img/newsbrand.jpg' %}{% endif %}" class="img-fluid sizeavatarnav-details border radius" alt="{{ child.user.username }}">
+                                <span class="font-weight-bolder">{{ child.user.username }}</span>
+                                {% if child.user.is_superuser %}(<span class="f-small">مدیر سایت</span>){% endif %}
+                                {% if child.user.status == 's' %}(<span class="f-small">کاربر ساده</span>){% endif %}
+                                {% if child.user.status == 'v' %}(<span class="f-small">کاربر ویژه</span>){% endif %}
+                                {% if child.user.status == 'g' %}(<span class="f-small">خبرگذار</span>){% endif %}
+                                {% if child.user.status == 'n' %}(<span class="f-small">خبرنگار</span>){% endif %}
+                                :
+                                <br>
+                                <p class="paragraph text-muted px-5">
+                                    {{ child.msg | safe }}
+                                </p>
+                                <br>
+                                <a href="{% url 'post:reportComment' child.id post.id %}" class="btn btn-sm bt-warning float-right ml-2">گزارش پیام</a>
+                                {% if request.user.is_superuser %}
+                                    <a href="{% url 'post:removeComment' child.id post.id %}" class="btn btn-sm bt-warning float-right">حذف پیام</a>
+                                {% endif %}
+                                <br>
+                            </div>
+                            <span class="c-muted float-right mr-4 f-small"><i class="fa fa-clock"></i> {{ child.timeStamp | timesince }} پیش</span>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <br>
+            <div class="alert alert-warning">هنوز هیچ نظری ارسال نشده است.</div>
+        {% endif %}
+    </div>
+
+    <br>
+    <a href="{% url 'post:list' %}" class="btn bt-warning-beauti">بازگشت به لیست اخبار</a>
+    <img src="{% static 'svg/comment.svg' %}" class="img-fluid imgSvgbottomman-list-new" alt="image ui">
+</section>
+<!-- end Body -->
+
+<script>
+
+    // scroll reading
+    $(window).scroll(function () {
+        var scrollPercent = 100 * $(window).scrollTop() / ($(document).height() - $('#read-post').height());
+        $('.bar-long').css('width', scrollPercent + "%");
+    });
+
+    {# Like #}
+
+    $('#ajaxLike').hide();
+    $('#ajaxdisLike').hide();
+
+    $('.likeBTN').click(function () {
+
+        $('#realDivAjax').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: '{% url "post:like" %}',
+            data: {
+                BlogID:{{ post.id }}
+            },
+            dataType: 'json',
+            success: function (response) {
+                if(response['like'] == true){
+
+                    $('#ajaxLike').hide();
+                    $('#realDivAjax').hide();
+                    $('#ajaxdisLike').hide();
+                    $('#ajaxLike').show();
+
+                    $('#counterAjax').text(response['count']);
+                }
+                if(response['like'] == false) {
+
+                    $('#ajaxLike').hide();
+                    $('#realDivAjax').hide();
+                    $('#ajaxdisLike').hide();
+                    $('#ajaxdisLike').show();
+
+                    $('#counterAjax').text(response['count']);
+                }
+            }
+        });
+    });
+
+{# Fav #}
+
+    $('#ajaxfav').hide();
+    $('#ajaxdisfav').hide();
+
+    $('.favBTN').click(function () {
+
+        $('#realfavDivAjax').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: '{% url "post:fav" %}',
+            data: {
+                BlogID:{{ post.id }}
+            },
+            dataType: 'json',
+            success: function (response) {
+                if(response['fav'] == true){
+
+                    $('#ajaxfav').hide();
+                    $('#realfavDivAjax').hide();
+                    $('#ajaxdisfav').hide();
+                    $('#ajaxfav').show();
+
+                }
+                if(response['fav'] == false) {
+
+                    $('#ajaxfav').hide();
+                    $('#realfavDivAjax').hide();
+                    $('#ajaxdisfav').hide();
+                    $('#ajaxdisfav').show();
+
+                }
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

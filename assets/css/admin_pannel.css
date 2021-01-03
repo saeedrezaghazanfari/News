@@ -1,0 +1,7 @@
+@font-face{
+    font-family: 'sahel';
+    src: url('../font/Sahel.woff'), url('../font/Sahel.ttf');
+}
+*, body, html{
+    font-family: sahel !important;
+}

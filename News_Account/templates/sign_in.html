@@ -1,0 +1,68 @@
+{% extends 'shared/__main_layout.html' %}
+{% block titlePage %}ورود | طلانیوز{% endblock %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<section class=" theLoginPage bg-light">
+    <form method="POST" class="formcenter border b-white shadow radius-sm">
+        {% csrf_token %}
+        <img src="{% static 'img/bg-login.jpg' %}" class="img-fluid" alt="image top">
+
+        <div class="px-5 pt-5" >
+            <label for="{{ sigin.emailOrUn.id_for_label }}" class="ml-4">{{ sigin.emailOrUn.label | safe }}</label>
+            {{ sigin.emailOrUn }}
+            {% for error in sigin.emailOrUn.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+
+        </div><br>
+
+        <div class="px-5">
+            <label for="{{ sigin.password.id_for_label }}" class="ml-4">{{ sigin.password.label | safe }}</label>
+            {{ sigin.password }}
+            <span onclick="showPW()" class="float-right text-muted f-small">نمایش رمز عبور<i class="fa fa-eye" id="eye"></i></span>
+            {% for error in sigin.password.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div><br><br>
+
+        <div class="px-5">
+            {{ sigin.captcha|add_class:'form-control form-control-auth w-50 d-inline'|attr:'placeholder:عبارت داخل کارد روبرو را وارد کنید:' }}
+            <button class="btn bt-warning js-captcha-refresh d-inline"><i class="fa fa-refresh"></i></button>
+            {% for error in sigin.captcha.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <div>
+            <br>
+            <div class="custom-control custom-switch d-inline ml-5">
+                <input type="checkbox" class="custom-control-input" id="switchremember" name="rememberMelogin">
+                <label class="custom-control-label" for="switchremember"> مرا بخاطر بسپار!</label>
+            </div>
+
+            <div class="d-inline float-right mr-5">
+                <a href="#" class="anchor">
+                    آیا رمز عبور خود را فراموش کرده اید؟
+                </a>
+            </div>
+        </div>
+
+        <div class="px-5 py-3 float-right">
+            <a href="{% url 'auth:signup' %}" class="btn btn-sm bt-warning-beauti "> صفحه ی ثبتنام </a>
+            <button class="btn btn-sm bt-warning-beauti " type="submit"> ورود به وبسایت خبری <i class="fa fa-sign-in"></i></button>
+        </div>
+    </form>
+</section>
+<script>
+    $('.js-captcha-refresh').click(function () {
+        $.getJSON("/captcha/refresh/", function (result) {
+            $('.captcha').attr('src', result['image_url']);
+            $('#id_captcha_0').val(result['key'])
+        });
+    });
+</script>
+
+{% endblock %}

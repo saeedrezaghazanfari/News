@@ -1,0 +1,47 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}نظرات کاربران{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>نظرات کاربران</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <table class="table table-hover table-borderless text-center">
+                    <tr class="bg-primary text-white">
+                        <th>#</th>
+                        <th>نام</th>
+                        <th>آدرس ایمیل</th>
+                        <th>عنوان  نظر</th>
+                        <th>متن نظر</th>
+                        <th>زمان ارسال</th>
+
+                    </tr>
+
+                    {% for i in opinions %}
+                    <tr>
+                        <td class="number">{{ forloop.counter }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.subject }}</td>
+                        <td><button class="btn btn-sm btn-primary" onclick="javascript:alert('{{ i.msg }}')">مشاهده</button></td>
+                        <td>{{ i.timeStamp|timesince }}</td>
+                     
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

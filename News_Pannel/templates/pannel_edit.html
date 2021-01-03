@@ -1,0 +1,66 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ویرایش اطلاعات {{ request.user.username }}{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ویرایش اطلاعات</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        {% if request.user.avatar %}<img src="{{ request.user.avatar.url }}" alt="{{ request.user.username }}" class="img-fluid imgeditusermanagerw mx-auto shadow">{% endif %}
+                    </div>
+
+                    <div class="px-5">
+                        <br><br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="{{ change_data_form.first_name.id_for_label }}" class="text-primary">{{ change_data_form.first_name.label }}</label>
+                                {{ change_data_form.first_name|add_class:'form-control form-control-sm'|attr:'placeholder: نام خود را وارد کنید:' }}<br>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ change_data_form.last_name.id_for_label }}" class="text-primary">{{ change_data_form.last_name.label }}</label>
+                                {{ change_data_form.last_name|add_class:'form-control form-control-sm'|attr:'placeholder: نام خانوادگی خود را وارد کنید:' }}<br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="{{ change_data_form.web.id_for_label }}" class="text-primary">{{ change_data_form.web.label }}</label>
+                                {{ change_data_form.web|add_class:'form-control form-control-sm'|attr:'placeholder: وبسایت خود را وارد کنید:' }}<br>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ change_data_form.phone.id_for_label }}" class="text-primary">{{ change_data_form.phone.label }}</label>
+                                {{ change_data_form.phone|add_class:'form-control form-control-sm'|attr:'placeholder: شماره تلفن خود را وارد کنید:' }}<br>
+                            </div>
+                        </div>
+
+                        <label for="{{ change_data_form.avatar.id_for_label }}" class="text-primary">{{ change_data_form.avatar.label }}</label><br>
+                        {{ change_data_form.avatar }}<br><br>
+
+                        <label for="{{ change_data_form.bio.id_for_label }}" class="text-primary">{{ change_data_form.bio.label }}</label>
+                        {{ change_data_form.bio|add_class:'p-3 form-control form-control-sm'|attr:'placeholder: بیوگرافی خود را وارد کنید:' }}
+
+                        <br>
+                        <button type="submit" class="btn btn-primary float-right">ذخیره ی تغییرات</button>
+                        <br><br>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

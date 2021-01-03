@@ -1,0 +1,70 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ویرایش خبر{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ویرایش خبر "{{ thisPost.title }}"</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="{{ editPost.title.id_for_label }}">{{ editPost.title.label }}</label>
+                            {{ editPost.title|add_class:'form-control form-control-sm' }}<br>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ editPost.writer.id_for_label }}">{{ editPost.writer.label }}</label>
+                            {{ editPost.writer|add_class:'form-control form-control-sm' }}<br>
+                        </div>
+                    </div>
+
+                    <label for="{{ editPost.image.id_for_label }}">{{ editPost.image.label }}</label>
+                    {{ editPost.image }}<br><br>
+
+                    <label for="{{ editPost.short_description.id_for_label }}">{{ editPost.short_description.label }}</label>
+                    {{ editPost.short_description|add_class:'form-control form-control-sm p-3' }}<br>
+
+                    <div class="text-center">
+                        <label for="{{ editPost.description.id_for_label }}">{{ editPost.description.label }}</label>
+                        {{ editPost.media }}<br>
+                        {{ editPost.description }}<br>
+                    </div>
+
+                    <span class="float-right">{% for i in thisPost.categories.all %}{{ i.title }}{% if not forloop.last %} ، {% endif %}{% endfor %}</span>
+                    <label for="{{ editPost.categories.id_for_label }}">{{ editPost.categories.label }}</label>
+                    {{ editPost.categories|add_class:'form-control form-control-sm p-3' }}<br>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="{{ editPost.time_reading.id_for_label }}">{{ editPost.time_reading.label }}</label>
+                            {{ editPost.time_reading|add_class:'form-control form-control-sm' }}<br>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ editPost.status.id_for_label }}">{{ editPost.status.label }}</label>
+                            {{ editPost.status|add_class:'form-control form-control-sm' }}<br>
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-sm btn-primary float-right">ویرایش اطلاعات خبر</button>
+                    <br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

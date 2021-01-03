@@ -1,0 +1,60 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ایجاد پست {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ایجاد پست</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <br>
+                    <label for="{{ sendpost.title.id_for_label }}" class="text-primary">{{ sendpost.title.label }}</label>
+                    {{ sendpost.title|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان خبر را وارد کنید:' }}<br>
+
+                    <label for="imagepost" class="text-primary">تصویر خبر</label>
+                    <input type="file" name="imagePost" id="imagepost" required>
+                    <br><br>
+
+                    <label for="{{ sendpost.categories.id_for_label }}" class="text-primary">{{ sendpost.categories.label }}</label>
+                    {{ sendpost.categories|add_class:'form-control form-control-sm px-3 pt-3' }}
+                    <br>
+
+                    <div class="text-center">
+                        {{ sendpost.media }}
+                        {{ sendpost.description }}
+                    </div>
+                    <br>
+
+                    <label for="{{ sendpost.short_description.id_for_label }}" class="text-primary">{{ sendpost.short_description.label }}</label>
+                    {{ sendpost.short_description|add_class:'form-control form-control-sm p-3'|attr:'placeholder: خلاصه ی خبر را وارد کنید:'|attr:'rows:3' }}<br>
+
+                    <label for="{{ sendpost.time_reading.id_for_label }}" class="text-primary">{{ sendpost.time_reading.label }}</label>
+                    {{ sendpost.time_reading|add_class:'form-control form-control-sm'|attr:'placeholder: زمان خواندن خبر را وارد کنید:' }}<br>
+
+                    <label for="{{ send_post_postgallery.title.id_for_label }}" class="text-primary">{{ send_post_postgallery.title.label }}</label>
+                    {{ send_post_postgallery.title|add_class:'form-control form-control-sm'|attr:'placeholder: تگ خبر را وارد کنید:' }}<br>
+
+                    <p class="paragraph text-muted">
+                        <i class="fa fa-check text-primary"></i>
+                        بعد از اینکه اطلاعات پست خود را تنظیم کردید میتوانید تنظیماتی مانند ایجاد تگ و گالری برای پست خود در نظر بگیرید.
+                    </p>
+
+                    <button type="submit" class="btn btn-primary float-right">ارسال خبر برای بررسی مدیر وبسایت</button>
+                    <br><br>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

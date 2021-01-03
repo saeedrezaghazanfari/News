@@ -1,0 +1,48 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}تماس های کاربران{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>تماس های کاربران</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <table class="table table-hover table-borderless text-center">
+                    <tr class="bg-primary text-white">
+                        <th>#</th>
+                        <th>آدرس ایمیل</th>
+                        <th>عنوان تماس</th>
+                        <th>تصویر ارسالی</th>
+                        <th>متن پیام</th>
+                        <th>زمان ارسال</th>
+
+                    </tr>
+
+                    {% for i in contacts %}
+                    <tr>
+                        <td class="number">{{ forloop.counter }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.subject }}</td>
+                        <td>{% if i.image %}<a href="{{ i.image.url }}"><img src="{{ i.image.url }}" class="imgintabs"></a>{% else %}-{% endif %}</td>
+                        <td><button class="btn btn-primary btn-sm" onclick="javascript:alert('{{ i.msg }}')">مشاهده</button></td>
+                        <td>{{ i.timeStamp|timesince }} پیش</td>
+
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

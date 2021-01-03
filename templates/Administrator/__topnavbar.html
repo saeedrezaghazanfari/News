@@ -1,0 +1,24 @@
+{% load static %}
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+
+    <a href="#menu-toggle" id="menu-toggle" class="navbar-brand">
+        <span class="navbar-toggler-icon"></span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'pannel:edit' %}">
+                <img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static 'img/newsbrand.jpg' %}{% endif %}" class="img-fluid sizeimgprotop" alt="{{ request.user.username }}">
+                <span class="text-white font-ava">{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}</span> -
+                <span class="text-white font-avaa">{% if request.user.status == 'v' %}ویژه{% endif %}{% if request.user.status == 'g' %}خبرگذار{% endif %}{% if request.user.status == 'n' %}خبرنگار{% endif %}</span>
+            </a> </li>
+            <li class="nav-item py-3 ml-3"> <a class="nav-link" href="/">طلا نیوز</a> </li>
+            <li class="nav-item py-3"> <a class="nav-link" href="{% url 'auth:signout' %}">خروج</a> </li>
+        </ul>
+        <form class="form-inline my-2 my-md-0"> </form>
+    </div>
+</nav>

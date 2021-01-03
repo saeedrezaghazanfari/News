@@ -1,0 +1,137 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}داشبورد {{ request.user.username }}{% endblock %}
+{% load static %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>داشبورد</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <div class="row text-muted p-3">
+                    <div class="col-md-6">
+                        <p class="pl-4"><i class="fa fa-user"></i> نام و نام خانوادگی: <b>{{ request.user.get_full_name }}</b></p>
+                        <p class="pl-4"><i class="fa fa-user"></i> نام کاربری: <b>{{ request.user.username }}</b></p>
+                        <p class="pl-4"><i class="fa fa-envelope"></i> ایمیل: <b>{{ request.user.email }}</b></p>
+                        <br>
+                        {% if request.user.avatar %}
+                            <a href="{{ request.user.avatar.url }}" class="btn btn-sm btn-primary ml-4 br-rl p-2" >مشاهده ی تصویر پروفایل</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <p class="pl-4"><i class="fa fa-graduation-cap"></i> مقام شما: <b>
+                            <span class="text-info">{% if request.user.status == 's' %}ساده{% endif %}</span>
+                            <span class="text-info">{% if request.user.status == 'v' %}ویژه{% endif %}</span>
+                            <span class="text-info">{% if request.user.status == 'g' %}خبرگذار{% endif %}</span>
+                            <span class="text-info">{% if request.user.status == 'n' %}خبرنگار{% endif %}</span>
+                        </b></p>
+                        <p class="pl-4"><i class="fa fa-phone"></i> شماره تماس: <b>{% if request.user.phone %}{{ request.user.phone }}{% else %}-{% endif %}</b></p>
+                        <p class="pl-4"><i class="fa fa-globe"></i> نام وبسایت: <b>{% if request.user.web %}{{ request.user.web }}{% else %}-{% endif %}</b></p>
+                        <p class="pl-4"><i class="fa fa-wikipedia-w"></i> بیوگرافی: <br><p class="font-weight-bolder text-center">{% if request.user.bio %}{{ request.user.bio }}{% else %}-{% endif %}</p></p>
+                    </div>
+                </div>
+
+            </div>
+            {% if request.user.is_superuser %}
+                <br>
+                <h5>همه ی پست های پیش نویس</h5>
+                {% if allPosts %}
+                 <div class="shadow border p-3">
+
+                    <table class="table table-hover table-borderless text-center">
+                        <tr class="bg-primary text-white">
+                            <th>#</th>
+                            <th>عنوان</th>
+                            <th>دسته بندی</th>
+                            <th>تعداد تصاویر گالری</th>
+                            <th>زمان ثبت</th>
+                            <th>زمان گذشته</th>
+                            <th>انتشار</th>
+                        </tr>
+
+                        {% for post in allPosts %}
+                        <tr>
+                            <td class="number">{{ forloop.counter }}</td>
+                            <th><a href="{{ post.get_absolute_url }}" class="anc">{{ post.title }}</a></th>
+                            <td>
+                                {% for i in post.categories.all %}
+                                    {{ i }}{% if not forloop.last %}،{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="number">{{ post.galleries.count }}</td>
+                            <td>{{ post.JtimeStamp }}</td>
+                            <td>{{ post.timeStamp | timesince }} پیش</td>
+                            <td><a href="{% url 'pannel:releasepost' post.id %}" class="btn btn-primary btn-sm">انتشار پست</a></td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        هیچ خبری هنوز از طرف کاربران منتشر نشده است.
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <br>
+            {% if request.user.status == 'g' or request.user.status == 'n' %}
+                <h5>پست های من</h5>
+
+                {% if posts %}
+                    <div class="shadow border p-3">
+
+                        <table class="table table-hover table-borderless text-center">
+                            <tr class="bg-primary text-white">
+                                <th>#</th>
+                                <th>عنوان</th>
+                                <th>دسته بندی</th>
+                                <th>وضعیت</th>
+                                <th>تعداد تصاویر گالری</th>
+                                <th>زمان ثبت</th>
+                                <th>زمان گذشته</th>
+                            </tr>
+                            {% for post in posts %}
+                            <tr>
+                                <td class="number">{{ forloop.counter }}</td>
+                                <th>
+                                    {% if post.status == 'p' %}
+                                        <a class="anc">{{ post.title }}</a>
+                                    {% endif %}
+                                    {% if post.status == 'm' %}
+                                        <a href="{{ post.get_absolute_url }}" class="anc">{{ post.title }}</a>
+                                    {% endif %}
+                                </th>
+                                <td>
+                                    {% for i in post.categories.all %}
+                                        {{ i }}{% if not forloop.last %}،{% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{% if post.status == 'p' %}پیش نویس{% endif %}{% if post.status == 'm' %}منتشر شده{% endif %}</td>
+                                <td class="number">{{ post.galleries.count }}</td>
+                                <td>{{ post.JtimeStamp }}</td>
+                                <td>{{ post.timeStamp | timesince }} پیش</td>
+                            </tr>
+
+                            {% endfor %}
+                        </table>
+
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        شما میتوانید به واسطه ی مقامی که دارید، از طریق این <a href="{% url 'pannel:sendpost' %}" class="anc">لینک</a> ، اقدام به ایجاد پست کنید.
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

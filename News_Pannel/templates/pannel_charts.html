@@ -1,0 +1,28 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}نمودار ها{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>نمودار ها</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <canvas id="myChart1"></canvas>
+                <br><br>
+                <canvas id="myChart2"></canvas>
+                <br>
+                <p class="text-muted">توجه: در نمودار دوم تمامی پست هایی که منتشر شده اند آمار داده شده اند و استثنایی در مورد پیشنویس و یا انتشار خبر وجود ندارد.</p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}افزودن تگ {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>افزودن تگ</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <br>
+
+                    <div class="form-group">
+                        <label for="selectPostuser">انتخاب پست مورد نظر</label>
+                        <select name="selectPostuser" class="form-control form-control-sm" id="selectPostuser">
+                            {% for i in posts %}
+                            <option value="{{ i.id }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <label for="{{ send_post_tags.title.id_for_label }}" class="text-primary">{{ send_post_tags.title.label }}</label>
+                    {{ send_post_tags.title|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان تگ را وارد کنید:' }}<br>
+
+                    <button type="submit" class="btn btn-primary float-right">ذخیره ی تگ</button>
+                    <br><br>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

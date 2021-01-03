@@ -1,0 +1,52 @@
+{% load widget_tweaks %}
+{% load static %}
+<section class="bg-map">
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="text-center">
+            <h5 class="c-warning">با ارسال نظر ما را دلگرم کنید و حامی ما باشید</h5>
+            <br>
+        </div>
+        <form method="POST">{% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ opinionform.name|add_class:'form-control form-control-home form-control-lg'|attr:'placeholder:* نام خود را وارد کنید:' }}
+                        {% for err in opinionform.name.errors %}
+                            <p class="text-danger f-small">{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ opinionform.email|add_class:'form-control form-control-home form-control-lg'|attr:'placeholder:* ایمیل خود را وارد کنید:' }}
+                        {% for err in opinionform.email.errors %}
+                            <p class="text-danger f-small">{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ opinionform.subject|add_class:'form-control form-control-home form-control-lg'|attr:'placeholder:*عنوان ایمیل خود را وارد کنید:' }}
+                        {% for err in opinionform.subject.errors %}
+                            <p class="text-danger f-small">{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{ opinionform.msg|add_class:'form-control form-control-home form-control-home-media form-control-lg p-3'|attr:'placeholder:* متن ایمیل خود را وارد کنید:'|attr:'rows:5' }}
+                    {% for err in opinionform.msg.errors %}
+                        <p class="text-danger f-small">{{ err }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="text-center">
+                <div id="success"></div>
+                <button class="btn bt-warning-beauti btn-xl" id="sendMessageButton" type="submit">ارسال ایمیل</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- to top -->
+    <a href="#" id="toTop" class="animate__animated">
+        <img src="{% static 'img/top4.png' %}" class="radius img-fluid border" alt="image to top">
+    </a>
+
+</section>

@@ -1,0 +1,70 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+
+    {% include 'Administrator/__header_ref.html' %}
+    <title>{% block titlePageAdmin %}{% endblock %}</title>
+
+</head>
+<body>
+
+    <!-- loading page -->
+    <div class="text-center loaderDIV">
+        <div class="mx-auto">
+            <img src="{% static 'img/preload.gif' %}" alt="this is preload page" class="custom-preload-image img-fluid">
+        </div>
+    </div>
+
+    {% include 'Administrator/__topnavbar.html' %}
+
+    <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        {% render_partial 'News_Pannel.views.pannel_sidebar' %}
+
+        <!-- content -->
+        {% block contentPannel %}{% endblock %}
+
+    </div>
+
+    <!-- alert Massage -->
+    <div class="messagesClass">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert bg-primary text-white alert-dismissible fade show removeAlertMsg" role="alert">
+                    {{ message | safe }}
+                    <button type="button" class="close btn" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% include 'Administrator/__footer_ref.html' %}
+
+<script>
+{#  PreLoad Page  #}
+document.onreadystatechange = function() {
+    if (document.readyState !== "complete") {
+        setTimeout(()=>{
+            $('body').css({'visibility':'hidden', 'backgroundColor':'white'});
+            $('.loaderDIV').css({'visibility':'visible'});
+        },500)
+    } else {
+        setTimeout(() => {
+            $('.loaderDIV').css({'display':'none'});
+            $('body').css({'visibility':'visible', 'backgroundColor':'initial'});
+        }, 500);
+    }
+};
+{% if request.path == '/user/manager/charts' %}
+
+    {% render_partial 'News_Pannel.views_managerUser.chart_code_partial' %}
+
+{% endif %}
+</script>
+</body>
+</html>

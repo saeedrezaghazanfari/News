@@ -1,0 +1,55 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ویرایش کاربر{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ویرایش کاربر "{{ thisUser.username }}"</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label>نام کاربری</label>
+                            <input type="text" class="form-control form-control-sm" disabled value="{{ thisUser.username }}"><br>
+        
+                            <label>نام</label>
+                            <input type="text" class="form-control form-control-sm" disabled value="{{ thisUser.first_name }}"><br>
+        
+                            <label>نام خانوادگی</label>
+                            <input type="text" class="form-control form-control-sm" disabled value="{{ thisUser.last_name }}"><br>
+        
+                            <label>زمان پیوستن</label>
+                            <input type="text" class="form-control form-control-sm" disabled value="{{ thisUser.date_joined }}"><br>
+                        </div>
+                        {% if thisUser.avatar %}
+                        <div class="col-md-4 text-center">
+                            <h5 class="text-primary">تصویر پروفایل</h5>
+                            <a href="{{ thisUser.avatar.url }}"><img src="{{ thisUser.avatar.url }}" alt="{{ thisUser.username }}" class="imgeditUsermanager img-fluid border"></a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {{ editUser|crispy }}
+
+                    <button type="submit" class="btn btn-sm btn-primary float-right">ویرایش اطلاعات کاربر</button>
+                    <br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

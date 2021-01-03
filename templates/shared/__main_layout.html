@@ -1,0 +1,104 @@
+{% load render_partial %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+
+    {% include 'shared/__header_ref.html' %}
+    <title>{% block titlePage %}پایگاه خبری | خانه{% endblock %}</title>
+
+</head>
+<body>
+
+<!-- loading page -->
+<div class="text-center loaderDIV">
+    <div class="mx-auto">
+        <img src="{% static 'img/preload.gif' %}" alt="this is preload page" class="custom-preload-image img-fluid">
+    </div>
+</div>
+
+{% if not request.path == '/sign-in' %}
+    {% if not request.path == '/sign-up' %}
+        {% render_partial 'News.views.header_partial' %}
+    {% endif %}
+{% endif %}
+
+{% block content %}{% endblock %}
+
+{% if not request.path == '/sign-in' or request.path == '/sign-up' %}
+    {% if not request.path == '/sign-up' %}
+        {% render_partial 'News.views.opinion_footer_partial' %}
+    {% endif %}
+{% endif %}
+
+<!-- alert Massage -->
+<div class="messagesClass">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert f-small b-dark c-warning alert-dismissible fade show removeAlertMsg" role="alert">
+                {{ message | safe }}
+                <button type="button" class="close btn" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% if not request.path == '/sign-in' or request.path == '/sign-up' %}
+    {% if not request.path == '/sign-up' %}
+        {% render_partial 'News.views.bottomWriter_partial' %}
+    {% endif %}
+{% endif %}
+
+{% include 'shared/__footer_ref.html' %}
+
+<script>
+
+// pre Load
+document.onreadystatechange = function() {
+    if (document.readyState !== "complete") {
+        setTimeout(()=>{
+            $('body').css({'visibility':'hidden', 'backgroundColor':'white'});
+            $('.loaderDIV').css({'visibility':'visible'});
+        },500)
+    } else {
+        setTimeout(() => {
+            $('.loaderDIV').css({'display':'none'});
+            $('body').css({'visibility':'visible', 'backgroundColor':'initial'});
+        }, 500);
+    }
+};
+
+// owl carousel
+var owl = $('.owl-carousel');
+owl.owlCarousel({
+    items:3,
+    loop:false,
+    margin:10,
+    rtl: true,
+    autoplay:true,
+    autoplayTimeout:1000,
+    autoplayHoverPause:false,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            // nav:true
+        },
+        600:{
+            items:2,
+            nav:false
+        },
+        1000:{
+            items:3,
+            // nav:true,
+            loop:false
+        }
+    }
+});
+
+</script>
+<script> new WOW().init(); </script>
+</body>
+</html>

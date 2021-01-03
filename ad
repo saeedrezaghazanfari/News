@@ -1,0 +1,30 @@
+[33mcommit 7582b094954f9bae4805ac3dcbdca90ef39ac7c7[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: سعیدرضا غضنفری <saeedreza.gh.1397@gmail.com>
+Date:   Mon Jan 4 01:56:47 2021 +0330
+
+    add Email in login user
+
+[33mcommit fadb359dcb6e89fb40a03137dcab4e6ed2e3cd2c[m
+Merge: 98465b8 41dcae1
+Author: سعیدرضا غضنفری <saeedreza.gh.1397@gmail.com>
+Date:   Thu Dec 24 22:36:27 2020 +0330
+
+    Merge branch 'main' of https://github.com/saeedrezaghazanfari/News into main
+
+[33mcommit 98465b8a0ceea5f2c82725af26db72137658d504[m
+Author: سعیدرضا غضنفری <saeedreza.gh.1397@gmail.com>
+Date:   Thu Dec 24 22:29:32 2020 +0330
+
+    secound commit
+
+[33mcommit 41dcae1cfba4984db0f8ddecc830693fa0d58cf8[m
+Author: SaeedReza <53904605+saeedrezaghazanfari@users.noreply.github.com>
+Date:   Thu Dec 24 22:11:06 2020 +0330
+
+    Create README.md
+
+[33mcommit 9054035826be56116a620d5c78ccba55fea66b76[m
+Author: سعیدرضا غضنفری <saeedreza.gh.1397@gmail.com>
+Date:   Thu Dec 24 22:06:37 2020 +0330
+
+    first commit

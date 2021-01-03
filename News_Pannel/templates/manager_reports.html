@@ -1,0 +1,50 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}گزارش ها{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>گزارش ها</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                {% if cmts %}
+                    <table class="table table-hover table-borderless text-center">
+                        <tr class="bg-primary text-white">
+                            <th>#</th>
+                            <th>کاربر گزارش شده</th>
+                            <th>متن پیام</th>
+                            <th>خبر</th>
+                            <th>زمان نوشتن پیام</th>
+                        </tr>
+
+                        {% for i in cmts %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.user.username }}</td>
+                            <td>{{ i.msg|truncatewords:10 }}</td>
+                            <td><a class="anc" href="{{ i.post.get_absolute_url }}">{{ i.post.title }}</a></td>
+                            <td>{{ i.timeStamp|timesince }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="alert alert-warning">
+                        هنوز تبلیغی در نشده است.
+                    </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ارسال تیکت {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ارسال تیکت</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+
+                    <label for="{{ send_ticket_form.subject.id_for_label }}"><b class="text-muted">{{ send_ticket_form.subject.label }}</b></label>
+                    {{ send_ticket_form.subject|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان تیکت خود را وارد کنید:' }}
+                    <br>
+                    <label for="{{ send_ticket_form.ticket.id_for_label }}"><b class="text-muted">{{ send_ticket_form.ticket.label }}</b></label>
+                    {{ send_ticket_form.ticket|add_class:'form-control form-control-sm p-3'|attr:'placeholder: متن تیکت خود را وارد کنید:' }}
+                    {% for i in send_ticket_form.ticket.errors %}
+                        <p class="f-small text-danger">{{ i }}</p>
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-sm float-right br-rl p-2 "> ارسال تیکت</button>
+                    <br><br>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

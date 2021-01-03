@@ -1,0 +1,46 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ایجاد گالری{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ایجاد گالری</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <br>
+
+                    <div class="form-group">
+                        <label for="selectPostuser">انتخاب پست مورد نظر</label>
+                        <select name="selectPostuser" class="form-control form-control-sm" id="selectPostuser">
+                            {% for i in posts %}
+                            <option value="{{ i.id }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <label for="{{ sendpostgalleries.title.id_for_label }}" class="text-primary">{{ sendpostgalleries.title.label }}</label>
+                    {{ sendpostgalleries.title|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان عکس را وارد کنید:' }}<br>
+
+                    <label for="imagepost" class="text-primary">تصویر خبر</label>
+                    <input type="file" name="imagePostGall" id="imagepost" required>
+                    <br><br>
+
+                    <button type="submit" class="btn btn-primary float-right">ذخیره ی گالری</button>
+                    <br><br>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

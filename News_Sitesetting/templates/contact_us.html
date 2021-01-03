@@ -1,0 +1,78 @@
+{% extends 'shared/__main_layout.html' %}
+{% block titlePage %}تماس با ما{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<!-- start Body -->
+<section class="container mt-3">
+
+    <div class="row z-imgsvgUp p-3 b-dark shadow radius-sm">
+        <div class="col-md-7 my-auto">
+            <div class="p-3 m-5 c-white radius-sm">
+
+                <h4> تماس با ما <i class="fa fa-phone c-warning"></i></h4><br>
+                <p class="c-muted"><i class="fa fa-check c-warning"></i>  شما میتوانید تنها با شرط داشتن حساب کاربری تماس خود را با ما برقرار کنید. </p>
+                <p class="c-muted"><i class="fa fa-check c-warning"></i> پس از ارسال پیام کمتر از 12 ساعت به ارتباط شما جواب داده میشود. </p>
+                <p class="c-muted"><i class="fa fa-check c-warning"></i> لطفا در دریافت جواب کوشا باشید. </p>
+                <p class="c-muted"><i class="fa fa-check c-warning"></i> اگر میخواهید فایلی ارسال کنید ، تنها مجاز به ارسال فایلهایی با فرمت jpeg و jpg و png میباشید. </p>
+
+            </div>
+        </div>
+        <div class="col-md-5">
+
+            <div class="card m-5 shadow">
+                <div class="card-body">
+                    <form enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ contact.email.id_for_label }}" class="text-danger">*<span class="c-dark">آدرس ایمیل:</span></label><br>
+                            {{ contact.email|add_class:"form-control form-control-contact"|attr:"placeholder:ایمیل خود را بصورت کامل وارد کنید." }}
+                            {% for err in contact.email.errors %}
+                                <p class="text-danger f-small">{{ err }}</p>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ contact.subject.id_for_label }}" class="text-danger">*<span class="c-dark">عنوان تماس شما:</span></label><br>
+                            {{ contact.subject|add_class:"form-control form-control-contact"|attr:"placeholder:عنوان تماس خود را وارد کنید." }}
+                            {% for err in contact.subject.errors %}
+                                <p class="text-danger f-small">{{ err }}</p>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ contact.image.id_for_label }}" class="text-danger"><span class="c-dark">فایل خود را انتخاب کنید:</span></label><br>
+                            {{ contact.image|add_class:"d-none" }}
+                            {% for err in contact.image.errors %}
+                                <p class="text-danger f-small">{{ err }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group form-group-textarea mt-1">
+                            <label for="{{ contact.msg.id_for_label }}" class="text-danger">*<span class="c-dark">متن پیام شما:</span></label><br>
+                            {{ contact.msg|add_class:"form-control form-control-contact form-control-home-media p-3"|attr:"placeholder:توجه: متن پیام شما نباید کمتر از 10 کاراکتر باشد."|attr:"rows:5" }}
+                            {% for err in contact.msg.errors %}
+                                <p class="text-danger f-small">{{ err }}</p>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <button type="submit" class="btn bt-warning-beauti btn-block">ارسال پیام <i class="fa fa-upload"></i></button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+    <!-- bottom image -->
+    <div class="imgSvgbottomman-contact text-center">
+        <h4 class="pt-50"><i class="fa fa-check c-warning"></i> از تبادلات شما با وبسایت سپاسگذاریم.</h4>
+    </div>
+
+</section>
+<!-- end Body -->
+
+{% endblock %}

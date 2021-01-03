@@ -1,0 +1,9 @@
+{% if advers %}
+<div class="b-dark c-white p-4 mt-2 radius-sm shadow">
+    <div class="card no-border b-dark">
+        {% for adver in advers %}
+            <a href="{{ adver.link }}" target="_blank"><img src="{{ adver.image.url }}" alt="{{ adver.title }}" class="imgadvr img-fluid mt-2"></a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

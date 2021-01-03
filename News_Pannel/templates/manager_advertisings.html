@@ -1,0 +1,51 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}تبلیغات{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>تبلیغات</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <p class="text-muted">توجه: هر تبلیغ پس از انتشار تا 12 ساعت در سایت میماند و بعد از آن از پایگاه داده حذف میشود.</p>
+                <a href="{% url 'pannel:manageradsadd' %}" class="btn btn-primary btn-sm float-right">اضافه کردن تبلیغ</a><br><br>
+                {% if adss %}
+                    <table class="table table-hover table-borderless text-center">
+                        <tr class="bg-primary text-white">
+                            <th>#</th>
+                            <th>عنوان تبلیغ</th>
+                            <th>تصویر تبلیغ</th>
+                            <th>زمان انتشار</th>
+                        </tr>
+
+                        {% for i in adss %}
+                            <tr>
+                                <td class="number">{{ forloop.counter }}</td>
+                                <td>{{ i.title }}</td>
+                                <td>
+                                    <a href="{{ i.image.url }}">
+                                        <img src="{{ i.image.url }}" class="imgintabs">
+                                    </a>
+                                </td>
+                                <td>{{ i.timeStamp|timesince }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="alert alert-warning">
+                        هنوز تبلیغی در نشده است.
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'shared/__main_layout.html' %}
+{% load render_partial %}
+{% block titlePage %}لیست پست های طلانیوز{% endblock %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<!-- start Body -->
+<section class="container p-3">
+    <br>
+    <ul class="nav nav-tabs">
+        <li class="nav-item nav-item-list font-weight-bolder">
+            <a class="nav-link active" data-toggle="tab" href="#home">آخرین اخبار</a>
+        </li>
+        <li class="nav-item nav-item-list font-weight-bolder">
+            <a class="nav-link" data-toggle="tab" href="#menu1">داغ ترین ها</a>
+        </li>
+        <li class="nav-item nav-item-list font-weight-bolder">
+            <a class="nav-link" data-toggle="tab" href="#menu2">محبوب ترین ها</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="home">
+
+            <div class="owl-carousel owl-theme">
+
+            {% for i in recents %}
+                <div class="item p-3">
+                    <a href="{{ i.get_absolute_url }}"><img class="img-fluid imgHome shadow" src="{{ i.image.url }}" alt=""></a>
+                    <span class="c-muted d-inline float-left mr-3 f-small mt-1"><i class="fa fa-clock"></i> {{ i.timeStamp|timesince }} پیش </span>
+                </div>
+            {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="tab-pane container fade" id="menu1">
+
+            <div class="owl-carousel owl-theme">
+
+            {% for i in hots %}
+                <div class="item p-3">
+                    <a href="{{ i.get_absolute_url }}"><img class="img-fluid imgHome shadow" src="{{ i.image.url }}" alt=""></a>
+                    <span class="c-muted d-inline float-left mr-3 f-small mt-1"><i class="fa fa-clock"></i> {{ i.timeStamp|timesince }} پیش </span>
+                </div>
+            {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="tab-pane container fade" id="menu2">
+
+            <div class="owl-carousel owl-theme">
+
+            {% for i in pops %}
+                <div class="item p-3">
+                    <a href="{{ i.get_absolute_url }}"><img class="img-fluid imgHome shadow" src="{{ i.image.url }}" alt=""></a>
+                    <span class="c-muted d-inline float-left mr-3 f-small mt-1"><i class="fa fa-clock"></i> {{ i.timeStamp|timesince }} پیش </span>
+                </div>
+            {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- news -->
+    <div class="row newsMedia">
+        <div class="col-md-8">
+
+            {% if object_list %}
+                {% for obj in object_list %}
+
+                <div class="b-dark c-white p-3 mt-2 radius-sm shadow">
+                    <img src="{{ obj.image.url }}" alt="{{ obj.title }}" class="img-fluid imglistblog">
+                    <br>
+                    <div class="p-3">
+                        <span class="float-right c-muted f-small"><i class="fa fa-eye"></i> <span class="number">{{ obj.views }}</span> بازدید</span>
+                        <h5>موضوع: <span class="font-weight-bolder">{{ obj.title }}</span></h5>
+                        <p>نویسنده: <a href="" class="anchor">{% if obj.writer.get_full_name %}{{ obj.writer.get_full_name }}{% else %}{{ obj.writer.username }}{% endif %}</a></p>
+                        <p class="f-small">خلاصه ی خبر: <span class="c-muted">{{ obj.short_description }}</span></p>
+                        <p class="f-small c-muted d-inline"><i class="fa fa-clock"></i> زمان انتشار: <span> {{ obj.timeStamp|naturalday }} </span></p>
+                        &nbsp;|&nbsp;
+                        <p class="f-small c-muted d-inline"><i class="fa fa-clock"></i> زمان خواندن: <span><span class="number">{{ obj.time_reading }}</span> دقیقه</span></p>
+                        <br>
+                        <br>
+                        <a href="{{ obj.get_absolute_url }}" class="btn btn-sm bt-warning-beauti float-right">خواندن خبر</a>
+                        <br>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            <br><br>
+
+            <ul class="ullist text-center">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-chevron-left"></i></a></li>
+                {% endif %}
+                {% for page in paginator.page_range %}
+                    {% if page == page_obj.number %}
+                        <li><a href="?page={{ page }}" class="number activeList">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ page }}" class="number">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
+                {% endif %}
+            </ul>
+
+            {% else %}
+                <br>
+                <div class="alert alert-warning">در حال حاظر هیچ خبری برای خواندن وجود ندارد.</div>
+            {% endif %}
+            <br>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="b-dark c-white p-4 mt-2 radius-sm shadow">
+                <img src="{% static 'svg/searchnews.svg' %}" class="svgSearch img-fluid" alt="image for ui">
+
+                <form class="form-inline" method="GET" action="{% url 'post:search' %}">
+                    <div class="input-group w-full">
+                        <input type="text" class="form-control br-r" placeholder="جستجوی خبر" name="post">
+                        <div class="input-group-prepend">
+                            <button type="submit" class="input-group-button btn bt-warning br-l"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+
+                <br>
+
+                {% render_partial 'News_Post.views.sidebar_list_partial' %}
+
+            </div>
+
+            <!-- sideBar2: advr -->
+            {% render_partial 'News_Post.views.list_sidebar_adver_partial' %}
+
+        </div>
+    </div>
+
+    <br>
+    <!-- bottom image -->
+    <img src="{% static 'svg/newlist.svg' %}" class="img-fluid imgSvgbottomman-list-new" alt="">
+
+</section>
+<!-- end Body -->
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}مدیریت کاربران{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>مدیریت کاربران</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <table class="table table-hover table-borderless text-center">
+                    <tr class="bg-primary text-white">
+                        <th>#</th>
+                        <th>نام کاربری</th>
+                        <th>ایمیل</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>IP</th>
+                        <th>وضعیت کارمندی</th>
+                        <th>وضعیت خبری</th>
+                        <th>انتشارات</th>
+                        <th>جزئیات</th>
+                    </tr>
+                    
+                    {% for i in users %}
+                    <tr>
+                        <td class="number">{{ forloop.counter }}</td>
+                        <th>{{ i.username }}</th>
+                        <td>{{ i.email }}</td>
+                        <td>{% if i.get_full_name %}{{ i.get_full_name }}{% else %}-{% endif %}</td>
+                        <td>{{ i.IP }}</td>
+                        <td>{% if i.is_staff %}<img src="{% static 'img/tik.png' %}" class="tikmultisize" alt="ok">{% else %}<img src="{% static 'img/multi.png' %}" class="tikmultisize" alt="ok">{% endif %}</td>
+                        <th>
+                            {% if i.status == 's' %}ساده{% endif %}
+                            {% if i.status == 'v' %}ویژه{% endif %}
+                            {% if i.status == 'g' %}خبرگذار{% endif %}
+                            {% if i.status == 'n' %}خبرنگار{% endif %}
+                        </th>
+                        <td class="number">{{ i.posts.count }}</td>
+                        <td>
+                            <a href="{% url 'pannel:managerUseredit' i.id %}" class="btn btn-sm btn-primary">ویرایش</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

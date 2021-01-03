@@ -1,0 +1,39 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}بایگانی اخبار {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>بایگانی اخبار</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <div class="p-3">
+                    {% if favs %}
+                        {% for fav in favs %}
+                            <div class="mt-2 p-3 border">
+                                <a href="{{ fav.post.get_absolute_url }}" class="pl-5 anc">{{ fav.post.title }}</a>
+                                <a href="{% url 'pannel:deletepostsave' fav.post.id %}" class="btn btn-sm btn-info float-right ml-1">حذف <i class="fa fa-trash"></i></a>
+                                <a href="{{ fav.post.get_absolute_url }}" class="btn btn-sm btn-primary float-right">مشاهده <i class="fa fa-eye"></i></a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-warning">
+                            قسمت بایگانی اخبار شما خالی میباشد.
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

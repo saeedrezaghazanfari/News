@@ -1,0 +1,58 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}اعلانات{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>اعلانات</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <label for="{{ sendNotification.title.id_for_label }}">{{ sendNotification.title.label }}</label>
+                    {{ sendNotification.title|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان اعلان خود را وارد کنید:' }}<br>
+
+                    <label for="{{ sendNotification.ntf.id_for_label }}">{{ sendNotification.ntf.label }}</label>
+                    {{ sendNotification.ntf|add_class:'form-control form-control-sm'|attr:'placeholder: متن اعلان خود را وارد کنید:' }}<br>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sends" class="custom-control-input" id="switch1">
+                        <label class="custom-control-label" for="switch1">ارسال به افرادی که عضویت <b>ساده</b> دارند.</label>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendv" class="custom-control-input" id="switch2">
+                        <label class="custom-control-label" for="switch2">ارسال به افرادی که عضویت <b>ویژه</b> دارند.</label>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendg" class="custom-control-input" id="switch3">
+                        <label class="custom-control-label" for="switch3">ارسال به افرادی که عضویت <b>خبرگذاری</b> دارند.</label>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" name="sendn" class="custom-control-input" id="switch4">
+                        <label class="custom-control-label" for="switch4">ارسال به افرادی که عضویت <b>خبرنگاری</b> دارند.</label>
+                    </div>
+                    <br>
+                    <p class="paragraph text-muted">
+                        توجه: بعد از زدن دکمه ی ارسال ، اعلانات به کاربران ارسال میشود.
+                    </p>
+                    <button type="submit" class="btn btn-sm btn-primary float-right">ارسال اعلان</button>
+                    <br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

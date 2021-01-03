@@ -1,0 +1,46 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}تغییر رمز عبور {{ request.user.username }}{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>تغییر رمز عبور</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="row p-3">
+                        <div class="col-md-6 p-2">
+                            <label for="{{ changepw.pw1.id_for_label }}" class="text-muted">{{ changepw.pw1.label | safe }}</label>
+                            {{ changepw.pw1|add_class:'form-control form-control-sm'|attr:'placeholder: رمزعبور جدید' }}
+                            {% for i in changepw.pw1.errors %}
+                                <p class="f-small text-danger">{{ i }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <label for="{{ changepw.pw2.id_for_label }}" class="text-muted">{{ changepw.pw2.label | safe }}</label>
+                            {{ changepw.pw2|add_class:'form-control form-control-sm'|attr:'placeholder: تکرار رمز عبور جدید' }}
+                            {% for i in changepw.pw2.errors %}
+                                <p class="f-small text-danger">{{ i }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm float-right br-rl p-2"> ویرایش اطلاعات <i class="fa fa-edit"></i></button>
+                    <br><br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

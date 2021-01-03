@@ -1,0 +1,34 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}ایجاد متن ایمیل{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>ایجاد متن ایمیل</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="{{ sendmailform.subject.id_for_label }}">{{ sendmailform.subject.label }}</label>
+                    {{ sendmailform.subject|add_class:'form-control form-control-sm'|attr:'placeholder: عنوان ایمیل خود را وارد کنید:' }}<br>
+
+                    <label for="{{ sendmailform.msg.id_for_label }}">{{ sendmailform.msg.label }}</label>
+                    {{ sendmailform.msg|add_class:'form-control form-control-sm p-3'|attr:'placeholder: متن ایمیل را وارد کنید:' }}<br>
+                    <button type="submit" class="btn btn-primary btn-sm float-right">ذخیره ی ایمیل</button>
+                    <br>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

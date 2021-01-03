@@ -1,0 +1,65 @@
+{% extends 'Administrator/__mainlayout.html' %}
+{% block titlePageAdmin %}مدیریت اخبار{% endblock %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% block contentPannel %}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <br>
+        <h4>مدیریت اخبار</h4>
+        <br>
+
+        <div class="container">
+            <div class="shadow border p-3">
+
+                <table class="table table-hover table-borderless text-center">
+                    <tr class="bg-primary text-white">
+                        <th>#</th>
+                        <th>عنوان خبر</th>
+                        <th>نویسنده</th>
+                        <th>تصویر</th>
+                        <th>خلاصه ی خبر</th>
+                        <th>دسته بندی ها</th>
+                        <th>زمان خواندن</th>
+                        <th>تعداد بازدید</th>
+                        <th>تعداد کامنت</th>
+                        <th>تعداد لایک</th>
+                        <th>زمان انتشار</th>
+                        <th>جزئیات</th>
+
+                    </tr>
+
+                    {% for i in posts %}
+                    <tr>
+                        <td class="number">{{ forloop.counter }}</td>
+                        <th><a href="{{ i.get_absolute_url }}" class="anc">{{ i.title }}</a></th>
+                        <td>{{ i.writer.username }}</td>
+                        <td><a href="{{ i.image.url }}"><img src="{{ i.image.url }}" alt="" class="imgintabs img-fluid"></a></td>
+                        <td><button class="btn btn-primary btn-sm" onclick="javascript:alert('{{ i.short_description }}')">مشاهده</button></td>
+                        <td>
+                            {% for ii in i.categories.all %}
+                                {{ ii.title }}{% if not forloop.last %} ، {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td><span class="number">{{ i.time_reading }}</span> دقیقه </td>
+                        <td class="number">{{ i.views }}</td>
+                        <td class="number">{{ i.comments_count }}</td>
+                        <td class="number">{{ i.like_count }}</td>
+                        <td>{{ i.timeStamp|naturalday }}</td>
+                        <td><a href="{% url 'pannel:managerPostedit' i.id %}" class="btn btn-primary btn-sm">ویرایش</a></td>
+
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

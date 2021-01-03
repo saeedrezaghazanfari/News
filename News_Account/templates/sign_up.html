@@ -1,0 +1,70 @@
+{% extends 'shared/__main_layout.html' %}
+{% block titlePage %}ثبتنام | طلانیوز{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<section class=" theLoginPage bg-light">
+    <form method="POST" class="formcenter border b-white shadow radius-sm">
+        {% csrf_token %}
+        <img src="{% static 'img/bg-login.jpg' %}" class="img-fluid" alt="">
+
+        <div class="px-5 pt-5" >
+            <label for="{{ signup.username.id_for_label }}" class="ml-4">{{ signup.username.label | safe }}</label>
+            {{ signup.username }}
+            {% for error in signup.username.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div><br>
+
+        <div class="px-5" >
+            <label for="{{ signup.email.id_for_label }}" class="ml-4">{{ signup.email.label | safe }}</label>
+            {{ signup.email }}
+            {% for error in signup.email.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div><br>
+
+        <div class="px-5">
+            <label for="{{ signup.password.id_for_label }}" class="ml-4">{{ signup.password.label | safe }}</label>
+            {{ signup.password }}
+            {% for error in signup.password.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div><br>
+
+        <div class="px-5">
+            <label for="{{ signup.repassword.id_for_label }}" class="ml-4">{{ signup.repassword.label | safe }}</label>
+            {{ signup.repassword }}
+            {% for error in signup.repassword.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div><br><br>
+
+        <div class="px-5">
+            {{ signup.captcha|add_class:'form-control form-control-auth w-50 d-inline'|attr:'placeholder:عبارت داخل کارد روبرو را وارد کنید:' }}
+            <button class="btn bt-warning js-captcha-refresh d-inline"><i class="fa fa-refresh"></i></button>
+            {% for error in signup.captcha.errors %}
+                <span class="text-danger f-small">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+
+        <div class="px-5 py-3 float-right">
+            <a href="{% url 'auth:signin' %}" class="btn btn-sm bt-warning-beauti ">صفحه ی ورود </a>
+            <button class="btn btn-sm bt-warning-beauti " type="submit">ثبتنام در وبسایت خبری <i class="fa fa-sign-in"></i></button>
+        </div>
+
+    </form>
+
+</section>
+<script>
+    $('.js-captcha-refresh').click(function () {
+        $.getJSON("/captcha/refresh/", function (result) {
+            $('.captcha').attr('src', result['image_url']);
+            $('#id_captcha_0').val(result['key'])
+        });
+    });
+</script>
+
+{% endblock %}
